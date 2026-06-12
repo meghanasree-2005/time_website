@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;650;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-sapphire: #0F1E36;
+  --color-royalblue: #1E3A8A;
+  --color-quicksand: #C5A880;
+  --color-swanwing: #F9F9FB;
+  --color-shellstone: #E7E2D8;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-swanwing);
+    color: #1A1A1A;
+    font-family: var(--font-sans);
+  }
+}
+
+/* Sub-custom animations to guarantee form fade ins */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes headShake {
+  0% { transform: translateX(0); }
+  6.5% { transform: translateX(-6px) rotateY(-9deg); }
+  18.5% { transform: translateX(5px) rotateY(7deg); }
+  31.5% { transform: translateX(-3px) rotateY(-5deg); }
+  43.5% { transform: translateX(2px) rotateY(3deg); }
+  50% { transform: translateX(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.animate-head-shake {
+  animation: headShake 0.6s ease-in-out;
+}

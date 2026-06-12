@@ -1,0 +1,6 @@
+{
+  "name": "TIME",
+  "description": "Premium customized watch e-commerce store with interactive design studio, smart search recommendations, and high-end styling.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
