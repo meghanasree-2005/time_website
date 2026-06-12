@@ -1,6 +1,12 @@
 import { Watch, Review } from "./types";
+// @ts-ignore
+import luxuryGoldWatch from "./assets/images/luxury_gold_watch_1781247175749.jpg";
+// @ts-ignore
+import titaniumEclipseSkeletonWatch from "./assets/images/titanium_eclipse_skeleton_watch_1781255556788.jpg";
+// @ts-ignore
+import genevaPerpetualCalendarWatch from "./assets/images/geneva_perpetual_calendar_watch_1781255575654.jpg";
 
-export const CUSTOMIZED_IMAGE = "/src/assets/images/luxury_gold_watch_1781247175749.jpg";
+export const CUSTOMIZED_IMAGE = luxuryGoldWatch;
 
 export const WATCHES: Watch[] = [
   {
@@ -146,7 +152,7 @@ export const WATCHES: Watch[] = [
     price: 4100,
     discountPrice: 3600,
     rating: 4.7,
-    image: "/src/assets/images/titanium_eclipse_skeleton_watch_1781255556788.jpg",
+    image: titaniumEclipseSkeletonWatch,
     description: "Artistry meets rugged modernism. Features an asymmetrical skeleton build, open escapement wheel, and precision micro-sandblasted titanium finish.",
     specs: {
       movement: "Atelier NH70 Skeleton Auto",
@@ -281,7 +287,7 @@ export const WATCHES: Watch[] = [
     price: 3900,
     discountPrice: 3450,
     rating: 4.9,
-    image: "/src/assets/images/geneva_perpetual_calendar_watch_1781255575654.jpg",
+    image: genevaPerpetualCalendarWatch,
     description: "A magnificent collector's tribute model keeping perpetual track of calendars, featuring day sub-dial, date ring track, and realistic custom moon-phase rotating dial.",
     specs: {
       movement: "Automatic Perpetual Caliber L20",
