@@ -14,6 +14,7 @@ export default function SmartRecommender({ onApplyWatchConfiguration }: SmartRec
   
   // Image uploads state
   const [uploadedBase64, setUploadedBase64] = useState<string | null>(null);
+  const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
   const [imageMimeType, setImageMimeType] = useState<string | null>(null);
   const [imageName, setImageName] = useState<string | null>(null);
 
@@ -58,6 +59,7 @@ export default function SmartRecommender({ onApplyWatchConfiguration }: SmartRec
 
   const clearImage = () => {
     setUploadedBase64(null);
+    setSelectedImageUrl(null);
     setImageMimeType(null);
     setImageName(null);
     if (fileInputRef.current) fileInputRef.current.value = "";
@@ -70,6 +72,7 @@ export default function SmartRecommender({ onApplyWatchConfiguration }: SmartRec
     }
     setImageName(file.name);
     setImageMimeType(file.type);
+    setSelectedImageUrl(null);
 
     const reader = new FileReader();
     reader.onload = () => {
@@ -80,28 +83,13 @@ export default function SmartRecommender({ onApplyWatchConfiguration }: SmartRec
   };
 
   // Convert image URL to Base64 for the preselected vibes
-  const handleSelectVibe = async (vibe: any) => {
+  const handleSelectVibe = (vibe: any) => {
     setTextQuery(vibe.query);
-    setIsLoading(true);
     setRecommendationResult(null);
-
-    try {
-      // Fetch visual preset as base64
-      const response = await fetch(vibe.image);
-      const blob = await response.blob();
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64data = (reader.result as string).split(",")[1];
-        setUploadedBase64(base64data);
-        setImageMimeType(blob.type);
-        setImageName(vibe.name + ".jpg");
-      };
-      reader.readAsDataURL(blob);
-    } catch (e) {
-      console.warn("Could not download vibe image directly in sandbox, text query loaded.");
-    } finally {
-      setIsLoading(false);
-    }
+    setSelectedImageUrl(vibe.image);
+    setUploadedBase64(null);
+    setImageMimeType("image/jpeg");
+    setImageName(vibe.name);
   };
 
   // Voice capture simulation with high-end waveform
@@ -141,7 +129,8 @@ export default function SmartRecommender({ onApplyWatchConfiguration }: SmartRec
           textQuery,
           speechQuery: voiceQuerySim || undefined,
           imageBase64: uploadedBase64 || undefined,
-          imageMime: imageMimeType || undefined
+          imageMime: imageMimeType || undefined,
+          imageUrl: selectedImageUrl || undefined
         }),
       });
 
@@ -281,11 +270,11 @@ export default function SmartRecommender({ onApplyWatchConfiguration }: SmartRec
                   accept="image/*"
                 />
 
-                {uploadedBase64 ? (
+                {uploadedBase64 || selectedImageUrl ? (
                   <div className="space-y-2 z-10" onClick={(e) => e.stopPropagation()}>
                     <div className="relative inline-block group">
                       <img
-                        src={`data:${imageMimeType};base64,${uploadedBase64}`}
+                        src={uploadedBase64 ? `data:${imageMimeType};base64,${uploadedBase64}` : (selectedImageUrl || "")}
                         alt="Preview upload"
                         className="w-20 h-20 object-cover rounded-lg border border-shellstone"
                         referrerPolicy="no-referrer"
@@ -337,7 +326,7 @@ export default function SmartRecommender({ onApplyWatchConfiguration }: SmartRec
           {/* Search Trigger Button */}
           <button
             onClick={submitStyleQuery}
-            disabled={isLoading || (!textQuery && !uploadedBase64)}
+            disabled={isLoading || (!textQuery && !uploadedBase64 && !selectedImageUrl)}
             className="w-full mt-4 py-4.5 bg-sapphire text-swanwing hover:bg-royalblue font-extrabold uppercase tracking-widest text-xs rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-40"
             style={{ minHeight: "48px" }}
             id="ai-style-query-btn"
