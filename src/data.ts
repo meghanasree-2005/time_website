@@ -1,6 +1,6 @@
 import { Watch, Review } from "./types";
 
-export const CUSTOMIZED_IMAGE = "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=800&auto=format&fit=crop";
+export const CUSTOMIZED_IMAGE = "https://images.unsplash.com/photo-1600857062241-98e5dba7f214?q=80&w=800&auto=format&fit=crop";
 
 export const WATCHES: Watch[] = [
   {

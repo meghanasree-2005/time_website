@@ -71,13 +71,62 @@ export default function SmartRecommender({ onApplyWatchConfiguration }: SmartRec
       return;
     }
     setImageName(file.name);
-    setImageMimeType(file.type);
     setSelectedImageUrl(null);
 
     const reader = new FileReader();
     reader.onload = () => {
-      const base64String = (reader.result as string).split(",")[1];
-      setUploadedBase64(base64String);
+      const img = new Image();
+      img.src = reader.result as string;
+      img.onload = () => {
+        try {
+          const canvas = document.createElement("canvas");
+          const maxWidth = 800;
+          const maxHeight = 800;
+          let width = img.width;
+          let height = img.height;
+
+          // Scale maintaining aspect ratio
+          if (width > height) {
+            if (width > maxWidth) {
+              height = Math.round((height * maxWidth) / width);
+              width = maxWidth;
+            }
+          } else {
+            if (height > maxHeight) {
+              width = Math.round((width * maxHeight) / height);
+              height = maxHeight;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          if (ctx) {
+            ctx.drawImage(img, 0, 0, width, height);
+            // Export as light-weight Jpeg to absolutely bypass 413 payload limits
+            const compressedDataUrl = canvas.toDataURL("image/jpeg", 0.75);
+            const base64String = compressedDataUrl.split(",")[1];
+            setUploadedBase64(base64String);
+            setImageMimeType("image/jpeg");
+          } else {
+            // Context null fallback
+            const base64String = (reader.result as string).split(",")[1];
+            setUploadedBase64(base64String);
+            setImageMimeType(file.type);
+          }
+        } catch (error) {
+          console.warn("Client-side image compression failed, using original file instead", error);
+          const base64String = (reader.result as string).split(",")[1];
+          setUploadedBase64(base64String);
+          setImageMimeType(file.type);
+        }
+      };
+      img.onerror = () => {
+        // Safe image load error fallback
+        const base64String = (reader.result as string).split(",")[1];
+        setUploadedBase64(base64String);
+        setImageMimeType(file.type);
+      };
     };
     reader.readAsDataURL(file);
   };
