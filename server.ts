@@ -13,6 +13,9 @@ const PORT = 3000;
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
+// Serve custom uploads/assets globally from assets directory
+app.use("/assets", express.static(path.join(process.cwd(), "assets")));
+
 // Lazy initializer for Gemini API to prevent app crash if key is missing on start
 let _ai: any = null;
 function getGeminiClient() {

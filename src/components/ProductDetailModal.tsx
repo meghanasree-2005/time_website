@@ -82,6 +82,11 @@ export default function ProductDetailModal({
             alt={watch.name}
             className="w-full h-full object-cover select-none"
             referrerPolicy="no-referrer"
+            onError={(e) => {
+              e.currentTarget.src = watch.id === "time-01" 
+                ? "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=800&auto=format&fit=crop"
+                : "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?q=80&w=800&auto=format&fit=crop";
+            }}
           />
           
           {/* Overlay Luxury Badging */}

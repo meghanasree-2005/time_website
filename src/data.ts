@@ -1,6 +1,6 @@
 import { Watch, Review } from "./types";
 
-export const CUSTOMIZED_IMAGE = "https://aistudio.google.com/a83e2238-51f7-466c-8099-04e3870b6828";
+export const CUSTOMIZED_IMAGE = "/assets/.aistudio/luxury_gold_watch_1781247175749.jpg";
 
 export const WATCHES: Watch[] = [
   {

@@ -108,6 +108,9 @@ export default function Hero({ onStartCustomizing, onExploreAI }: HeroProps) {
                   alt="TIME Bespoke Onyx Tourbillon" 
                   className="w-full h-full object-cover transform duration-1000 group-hover:scale-105"
                   referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    e.currentTarget.src = "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=800&auto=format&fit=crop";
+                  }}
                 />
                 
                 {/* Embedded specs badge */}
