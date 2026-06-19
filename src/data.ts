@@ -1,6 +1,7 @@
 import { Watch, Review } from "./types";
+import luxuryGoldWatchImage from "./assets/images/luxury_gold_watch_1781247175749_1781882748314.jpg";
 
-export const CUSTOMIZED_IMAGE = "/assets/.aistudio/luxury_gold_watch_1781247175749.jpg";
+export const CUSTOMIZED_IMAGE = luxuryGoldWatchImage;
 
 export const WATCHES: Watch[] = [
   {
